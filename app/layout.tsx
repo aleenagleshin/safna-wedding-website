@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Safna & Shanib – Wedding Invitation",
     description: "Join us on 6 December 2025 for our special day.",
-    url: "https://safnawedsshanib.vercel.app",          // ← replace with your domain
+    url: "https://safna-wedding-website.vercel.app/",          // ← replace with your domain
     siteName: "Safna & Shanib Wedding",
     images: [
       {
