@@ -127,7 +127,7 @@ export default function Home() {
       </section>
 
       {/* Countdown Section */}
-      <section className="flex justify-center py-10 px-5 -mb-12 relative z-10">
+      <section className="flex justify-center py-9 px-1 -mb-2 relative z-10">
         <div className="rounded-3xl p-10 text-center max-w-xl w-full relative z-10 backdrop-blur-sm bg-white/5 border border-white/10 shadow-2xl hover:scale-105 transition-transform duration-300">
           <h2
             className="text-4xl md:text-5xl font-normal text-gray-100 mb-3"
@@ -168,7 +168,7 @@ export default function Home() {
           </div>
 
           <p
-            className="text-sm italic opacity-85 mt-4 text-gray-50"
+            className="text-sm italic opacity-100 mt-4 text-gray-50"
             style={{ fontFamily: 'Cormorant Garamond, serif', fontStyle: 'italic' }}
           >
             <br />
@@ -357,7 +357,7 @@ export default function Home() {
                 {loading
                   ? "Sending..."
                   : messageSent
-                    ? "✓ Message Sent"
+                   ? "✓ Thanks for the wishes 🖤"
                     : "Send Message"}
               </button>
             </div>
@@ -367,7 +367,7 @@ export default function Home() {
 
       {/* Final Section with Parallax */}
       < section
-        className="relative py-64 md:py-96 px-10 text-center"
+      className="relative flex items-end justify-center h-[90vh] px-10 pb-32 text-center"
         style={{
           backgroundImage: 'url("/final.jpg")',
           backgroundSize: 'cover',
