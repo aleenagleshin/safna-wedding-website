@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     siteName: "Safna & Shanib Wedding",
     images: [
       {
-        url: "/preview.jpg",                // ← the image in public folder
+        url: "https://safna-wedding-website.vercel.app/preview.jpg",                // ← the image in public folder
         width: 1200,
         height: 630,
       }
