@@ -376,7 +376,7 @@ export default function Home() {
         }
         }
       >
-        <div className="absolute inset-0 bg-[#34333380] z-0" />
+        <div className="absolute inset-0 bg-[#2a282880] z-0" />
         <h1
           className="relative z-10 text-6xl md:text-8xl  text-white animate-pulse"
           style={{
