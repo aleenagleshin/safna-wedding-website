@@ -367,7 +367,8 @@ export default function Home() {
 
       {/* Final Section with Parallax */}
       < section
-      className="relative flex items-end justify-center h-[90vh] px-10 pb-32 text-center"
+     /* className="relative flex items-end justify-center h-[90vh] px-10 pb-32 text-center"*/
+     className="relative py-64 md:py-96 px-10 text-center"
         style={{
           backgroundImage: 'url("/final.jpg")',
           backgroundSize: 'cover',
