@@ -2,13 +2,6 @@
 
 import { useEffect, useState } from "react";
 
-// Note: In your actual Next.js app, add these imports at the top of your file:
-// import { Great_Vibes, Playfair_Display, Lato } from 'next/font/google';
-// 
-// const greatVibes = Great_Vibes({ weight: '400', subsets: ['latin'] });
-// const playfair = Playfair_Display({ weight: ['400', '600', '700'], subsets: ['latin'] });
-// const lato = Lato({ weight: ['300', '400', '700'], subsets: ['latin'] });
-
 export default function Home() {
   const targetDate = new Date("December 6, 2025 00:00:00").getTime();
 
@@ -27,11 +20,9 @@ export default function Home() {
   });
   const [scrolled, setScrolled] = useState(false);
   const [name, setName] = useState("");
-
   const [message, setMessage] = useState("");
   const [messageSent, setMessageSent] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -56,32 +47,33 @@ export default function Home() {
   const handleSendMessage = async () => {
     if (!name.trim() || !message.trim()) return;
 
-
     setLoading(true);
-    setError("");
     setMessageSent(false);
-    await fetch("https://script.google.com/macros/s/AKfycbxff2L0RqW1Y1GgTPkcmRDaZdVMr9t2kRBsivzkd2ZjQatLr_N5nw4uzh8i6X7xeNSoPg/exec", {
-      method: "POST",
-      body: JSON.stringify({ name, msg: message })
-    });
-
-    setLoading(false)
-    setMessageSent(true);
-    setName("");
-    setMessage("")
-    setTimeout(() => setMessageSent(false), 2000);
-
+    
+    try {
+      await fetch("https://script.google.com/macros/s/AKfycbxff2L0RqW1Y1GgTPkcmRDaZdVMr9t2kRBsivzkd2ZjQatLr_N5nw4uzh8i6X7xeNSoPg/exec", {
+        method: "POST",
+        body: JSON.stringify({ name, msg: message })
+      });
+      setMessageSent(true);
+      setName("");
+      setMessage("");
+      setTimeout(() => setMessageSent(false), 2000);
+    } catch (error) {
+      console.error("Error sending message:", error);
+    } finally {
+      setLoading(false);
+    }
   };
-
 
   return (
     <div className="bg-black text-white relative overflow-hidden" style={{ fontFamily: 'Lato, sans-serif' }}>
-      {/* Google Fonts - Load in production via next/font */}
+      {/* Google Fonts */}
       <style jsx global>{`
         @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap');
       `}</style>
 
-      {/* Starry background effect */}
+      {/* Starry background */}
       <div
         className="fixed inset-0 pointer-events-none z-0"
         style={{
@@ -90,9 +82,9 @@ export default function Home() {
         }}
       />
 
-      {/* Hero Section with Parallax */}
+      {/* Hero Section */}
       <section
-        className="relative h-screen flex justify-center items-center transition-all duration-700 ease-in-out"
+        className="relative min-h-screen flex justify-center items-center py-20 px-4"
         style={{
           backgroundImage: 'url("/venue.jpg")',
           backgroundSize: 'cover',
@@ -100,15 +92,15 @@ export default function Home() {
           backgroundAttachment: 'fixed'
         }}
       >
-        {/* Overlay with transition */}
         <div
-          className={`absolute inset-0 transition-all duration-1000 pointer-events-none ${scrolled ? 'bg-black/15' : 'bg-black/75'
-            }`}
+          className={`absolute inset-0 transition-all duration-1000 pointer-events-none ${
+            scrolled ? 'bg-black/15' : 'bg-black/75'
+          }`}
         />
 
-        <div className="text-center z-10 px-4">
+        <div className="text-center z-10 px-4 max-w-4xl mx-auto">
           <h1
-            className="text-6xl md:text-7xl lg:text-8xl mb-8 tracking-wide"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl mb-6 md:mb-8 tracking-wide leading-tight"
             style={{
               fontFamily: 'Great Vibes, cursive',
               textShadow: '0 2px 10px rgba(0,0,0,0.3)'
@@ -117,7 +109,7 @@ export default function Home() {
             Safna Shamli <br />& <br /> Shanib Jan
           </h1>
           <p
-            className="text-xl md:text-2xl opacity-95 font-light leading-relaxed tracking-wide"
+            className="text-lg sm:text-xl md:text-2xl opacity-95 font-light leading-relaxed tracking-wide"
             style={{ fontFamily: 'Cormorant Garamond, serif' }}
           >
             With the blessings of Allah <br />
@@ -127,38 +119,38 @@ export default function Home() {
       </section>
 
       {/* Countdown Section */}
-      <section className="flex justify-center py-9 px-1 -mb-2 relative z-10">
-        <div className="rounded-3xl p-10 text-center max-w-xl w-full relative z-10 backdrop-blur-sm bg-white/5 border border-white/10 shadow-2xl hover:scale-105 transition-transform duration-300">
+      <section className="flex justify-center py-8 md:py-12 px-4 relative z-10">
+        <div className="rounded-2xl md:rounded-3xl p-6 md:p-10 text-center max-w-xl w-full relative z-10 backdrop-blur-sm bg-white/5 border border-white/10 shadow-2xl hover:scale-105 transition-transform duration-300">
           <h2
-            className="text-4xl md:text-5xl font-normal text-gray-100 mb-3"
+            className="text-3xl sm:text-4xl md:text-5xl font-normal text-gray-100 mb-3"
             style={{ fontFamily: 'Great Vibes, cursive' }}
           >
             Mark Our Special Day
           </h2>
-          <p className="text-base text-gray-300 mb-2" style={{ fontFamily: 'Lato, sans-serif', fontWeight: 300 }}>
+          <p className="text-sm md:text-base text-gray-300 mb-2" style={{ fontFamily: 'Lato, sans-serif', fontWeight: 300 }}>
             Counting Down To
           </p>
-          <p className="text-2xl mb-2 animate-pulse">❤</p>
-          <p className="text-xl font-medium mb-6 text-gray-50" style={{ fontFamily: 'Playfair Display, serif' }}>
+          <p className="text-xl md:text-2xl mb-2 animate-pulse">❤</p>
+          <p className="text-lg md:text-xl font-medium mb-6 text-gray-50" style={{ fontFamily: 'Playfair Display, serif' }}>
             6 December 2025
           </p>
 
-          <div className="flex justify-center gap-4 md:gap-8 text-gray-50 mb-5">
+          <div className="grid grid-cols-4 gap-2 sm:gap-4 md:gap-6 text-gray-50 mb-5">
             {[
               { value: timeLeft.days, label: 'Days' },
               { value: timeLeft.hours, label: 'Hours' },
               { value: timeLeft.minutes, label: 'Minutes' },
               { value: timeLeft.seconds, label: 'Seconds' }
             ].map((item, idx) => (
-              <div key={idx} className="flex flex-col items-center bg-white/10 rounded-xl p-3 md:p-4 backdrop-blur-sm hover:bg-white/20 transition-all">
+              <div key={idx} className="flex flex-col items-center bg-white/10 rounded-lg md:rounded-xl p-2 md:p-4 backdrop-blur-sm hover:bg-white/20 transition-all">
                 <span
-                  className="text-3xl md:text-4xl min-w-[60px] text-center"
+                  className="text-2xl sm:text-3xl md:text-4xl text-center"
                   style={{ fontFamily: 'Playfair Display, serif', fontWeight: 600 }}
                 >
                   {item.value || 0}
                 </span>
                 <span
-                  className="text-xs mt-1 text-gray-200 uppercase tracking-wider"
+                  className="text-[10px] sm:text-xs mt-1 text-gray-200 uppercase tracking-wider"
                   style={{ fontFamily: 'Lato, sans-serif', fontWeight: 300 }}
                 >
                   {item.label}
@@ -168,7 +160,7 @@ export default function Home() {
           </div>
 
           <p
-            className="text-sm italic opacity-100 mt-4 text-gray-50"
+            className="text-xs sm:text-sm italic opacity-100 mt-4 text-gray-50 px-2"
             style={{ fontFamily: 'Cormorant Garamond, serif', fontStyle: 'italic' }}
           >
             <br />
@@ -177,9 +169,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Venue Section with Parallax */}
+      {/* Venue Section */}
       <section
-        className="py-10 px-5 relative z-10 overflow-hidden"
+        className="py-10 md:py-16 px-4 md:px-5 relative z-10 overflow-hidden"
         style={{
           backgroundImage: 'url("https://plus.unsplash.com/premium_photo-1664304118366-216dbb7c76cf?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")',
           backgroundSize: 'cover',
@@ -187,19 +179,18 @@ export default function Home() {
           backgroundAttachment: 'fixed'
         }}
       >
-        {/* Invitation overlay */}
         <div className="relative">
           <div className="absolute inset-0 bg-black/60 z-0" />
-          <div className="relative z-10 py-16">
-            <div className="max-w-4xl mx-auto text-center">
+          <div className="relative z-10 py-12 md:py-16">
+            <div className="max-w-4xl mx-auto text-center px-4">
               <h2
-                className="text-5xl md:text-6xl text-white mb-6"
+                className="text-4xl sm:text-5xl md:text-6xl text-white mb-4 md:mb-6"
                 style={{ fontFamily: 'Great Vibes, cursive' }}
               >
                 Cherish This Special Day Together ❤
               </h2>
               <p
-                className="text-lg md:text-xl leading-relaxed text-gray-100 px-4"
+                className="text-base sm:text-lg md:text-xl leading-relaxed text-gray-100"
                 style={{ fontFamily: 'Cormorant Garamond, serif', fontWeight: 300 }}
               >
                 We request the honour of your presence at our Nikah ceremony.
@@ -211,12 +202,12 @@ export default function Home() {
         </div>
 
         {/* Map and Details */}
-        <div className="flex flex-wrap gap-6 mt-10 items-start relative z-10 max-w-6xl mx-auto">
-          <div className="w-full md:w-[35%] bg-black/55 backdrop-blur-sm p-8 rounded-xl border border-white/20 hover:bg-black/70 transition-all">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm">
+        <div className="flex flex-col lg:flex-row gap-4 md:gap-6 mt-8 md:mt-10 items-stretch relative z-10 max-w-6xl mx-auto">
+          <div className="w-full lg:w-[35%] bg-black/55 backdrop-blur-sm p-6 md:p-8 rounded-xl border border-white/20 hover:bg-black/70 transition-all">
+            <div className="flex items-center gap-3 mb-4 md:mb-6">
+              <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm flex-shrink-0">
                 <svg
-                  className="w-6 h-6 text-white"
+                  className="w-5 h-5 md:w-6 md:h-6 text-white"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -235,23 +226,17 @@ export default function Home() {
                   />
                 </svg>
               </div>
-              <h3
-                className="text-3xl text-white font-bold"
-              // style={{ fontFamily: 'Playfair Display, serif', fontWeight: 600 }}
-              >
+              <h3 className="text-2xl md:text-3xl text-white font-bold">
                 Getting There
               </h3>
             </div>
             <div className="space-y-4">
               <div>
-                <p
-                  className="text-xl leading-relaxed text-white mb-1 capitalize"
-                // style={{ fontFamily: 'Playfair Display, serif', fontWeight: 600 }}
-                >
+                <p className="text-lg md:text-xl leading-relaxed text-white mb-1 capitalize">
                   Kunhimmu Auditorium
                 </p>
                 <p
-                  className="text-base text-gray-300"
+                  className="text-sm md:text-base text-gray-300"
                   style={{ fontFamily: 'Lato, sans-serif', fontWeight: 300 }}
                 >
                   Tirur, Kerala 676101
@@ -259,51 +244,25 @@ export default function Home() {
               </div>
               <div className="pt-3 border-t border-white/20">
                 <div className="flex items-center gap-2 text-gray-200">
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                    />
+                  <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
-                  <p
-                    className="text-base"
-                    style={{ fontFamily: 'Lato, sans-serif', fontWeight: 400 }}
-                  >
+                  <p className="text-sm md:text-base" style={{ fontFamily: 'Lato, sans-serif', fontWeight: 400 }}>
                     6 December 2025
                   </p>
                 </div>
                 <div className="flex items-center gap-2 text-gray-200 mt-2">
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
+                  <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <p
-                    className="text-base"
-                    style={{ fontFamily: 'Lato, sans-serif', fontWeight: 400 }}
-                  >
+                  <p className="text-sm md:text-base" style={{ fontFamily: 'Lato, sans-serif', fontWeight: 400 }}>
                     12:00 PM
                   </p>
                 </div>
               </div>
             </div>
           </div>
-          <div className="w-full md:w-[60%] rounded-2xl overflow-hidden border-2 border-white/30 shadow-2xl hover:scale-105 transition-transform duration-300">
+          <div className="w-full lg:w-[60%] rounded-xl md:rounded-2xl overflow-hidden border-2 border-white/30 shadow-2xl hover:scale-105 transition-transform duration-300">
             <iframe
               src="https://www.google.com/maps?q=10.9153305,75.9375966&hl=en&z=16&output=embed"
               width="100%"
@@ -318,68 +277,67 @@ export default function Home() {
       </section>
 
       {/* Message Section */}
-      <section className="py-16 px-5 relative z-10">
+      <section className="py-12 md:py-16 px-4 md:px-5 relative z-10">
         <div className="max-w-lg mx-auto">
-          <div className="flex flex-col items-center text-center gap-6">
+          <div className="flex flex-col items-center text-center gap-4 md:gap-6">
             <h2
-              className="text-5xl md:text-6xl"
+              className="text-4xl sm:text-5xl md:text-6xl"
               style={{ fontFamily: 'Great Vibes, cursive' }}
             >
               Send Your Wishes 💌
             </h2>
             <p
-              className="text-gray-400 text-lg"
+              className="text-gray-400 text-base md:text-lg"
               style={{ fontFamily: 'Lato, sans-serif', fontWeight: 300 }}
             >
               Drop a message for the happy couple
             </p>
 
-            <div className="w-full p-8 md:p-12 rounded-3xl shadow-2xl bg-linear-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/20 hover:shadow-3xl hover:-translate-y-2 transition-all duration-300">
+            <div className="w-full p-6 md:p-8 lg:p-12 rounded-2xl md:rounded-3xl shadow-2xl bg-white/10 backdrop-blur-sm border border-white/20 hover:shadow-3xl hover:-translate-y-2 transition-all duration-300">
               <input
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Your Name"
-                className="w-full mb-4 p-4 rounded-xl border-2 border-dashed border-stone-300 bg-stone-50 text-gray-800 text-lg focus:outline-none focus:border-stone-500 focus:bg-white transition-all shadow-inner"
+                className="w-full mb-4 p-3 md:p-4 rounded-xl border-2 border-dashed border-stone-300 bg-stone-50 text-gray-800 text-base md:text-lg focus:outline-none focus:border-stone-500 focus:bg-white transition-all shadow-inner"
                 style={{ fontFamily: 'Lato, sans-serif' }}
               />
               <textarea
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Write your heartfelt wishes here..."
-                className="w-full min-h-[180px] p-6 rounded-xl border-2 border-dashed border-stone-300 bg-stone-50 text-gray-800 text-lg focus:outline-none focus:border-stone-500 focus:bg-white transition-all resize-y shadow-inner"
+                className="w-full min-h-[150px] md:min-h-[180px] p-4 md:p-6 rounded-xl border-2 border-dashed border-stone-300 bg-stone-50 text-gray-800 text-base md:text-lg focus:outline-none focus:border-stone-500 focus:bg-white transition-all resize-y shadow-inner"
                 style={{ fontFamily: 'Lato, sans-serif' }}
               />
               <button
                 onClick={handleSendMessage}
-                className="mt-6 px-8 py-3 bg-white text-black text-lg rounded-xl cursor-pointer transition-all duration-300 hover:bg-gray-200 hover:-translate-y-1 shadow-lg hover:shadow-xl active:scale-95"
+                className="mt-4 md:mt-6 px-6 md:px-8 py-2.5 md:py-3 bg-white text-black text-base md:text-lg rounded-xl cursor-pointer transition-all duration-300 hover:bg-gray-200 hover:-translate-y-1 shadow-lg hover:shadow-xl active:scale-95 w-full sm:w-auto"
                 style={{ fontFamily: 'Playfair Display, serif', fontWeight: 600 }}
               >
                 {loading
                   ? "Sending..."
                   : messageSent
-                   ? "✓ Thanks for the wishes 🖤"
+                    ? "✓ Thanks for the wishes 🖤"
                     : "Send Message"}
               </button>
             </div>
           </div>
         </div>
-      </section >
+      </section>
 
-      {/* Final Section with Parallax */}
-      < section
-     className="relative flex items-end justify-center h-[90vh] px-10 pb-32 text-center"
-     /*className="relative py-64 md:py-96 px-10 text-center"*/
+      {/* Final Section */}
+      <section
+       className="relative py-64 md:py-96 px-10 text-center"
         style={{
           backgroundImage: 'url("/final.jpg")',
           backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          backgroundPosition: 'center center',
+          backgroundRepeat: 'no-repeat',
           backgroundAttachment: 'fixed'
-        }
-        }
+        }}
       >
         <div className="absolute inset-0 bg-[#2a282880] z-0" />
         <h1
-          className="relative z-10 text-6xl md:text-8xl  text-white animate-pulse"
+          className="relative z-10 text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-white animate-pulse"
           style={{
             fontFamily: 'Great Vibes, cursive',
             textShadow: '0 2px 20px rgba(0,0,0,0.5)'
@@ -387,15 +345,15 @@ export default function Home() {
         >
           See You There!
         </h1>
-      </ section>
+      </section>
 
       {/* Footer */}
-      < footer
-        className="text-center py-6 bg-black text-gray-100 text-base relative z-10 border-t border-white/10"
+      <footer
+        className="text-center py-6 bg-black text-gray-100 text-sm md:text-base relative z-10 border-t border-white/10"
         style={{ fontFamily: 'Lato, sans-serif', fontWeight: 300 }}
       >
         <p className="m-0">Coded with love Aleena ❤ Athul</p>
-      </footer >
-    </div >
+      </footer>
+    </div>
   );
 }
